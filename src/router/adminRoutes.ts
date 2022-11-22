@@ -3,7 +3,7 @@ import layout from '@/layout/index.vue';
 
 const adminRoutes: RouteRecordRaw = {
   path: '/',
-  name: 'Admin',
+  name: 'Index',
   component: layout,
   redirect: '/user',
   meta: {

@@ -15,11 +15,13 @@ router.beforeEach((to) => {
     document.title = import.meta.env.VITE_TITLE;
   }
 
-  if (!whites.includes(to.path)) {
-    const store = useUser();
-    if (!store.getToken()) {
-      return { name: 'Login' };
-    }
+  const store = useUser();
+  const token = store.getToken();
+  if (to.name === 'Login' && token) {
+    return { name: 'Index' };
+  }
+  if (!whites.includes(to.path) && !token) {
+    return { name: 'Login' };
   }
 });
 
