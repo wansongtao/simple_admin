@@ -1,0 +1,14 @@
+:root {
+  --appbgcolor: #f4f4f4;
+
+  --headerhg: 64px;
+  --headbgcolor: #fff;
+  --titlesize: 24px;
+  --titlecolor: #606266;
+
+  --sidebgcolor: #344563;
+  --sidewd: 230px;
+
+  --mainbgcolor: #fff;
+  --mainmargin: 15px;
+}
