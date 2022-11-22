@@ -1,4 +1,4 @@
-# 多人协作灭火成绩后台
+# 简易后台模板
 vue3.2 + vue-router4 + pinia2 + vite2.9 + ts4.5 + ant-design-vue3.2
 
 ## Build Setup
