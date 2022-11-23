@@ -4,7 +4,7 @@ import adminRoutes from '@/router/adminRoutes';
 /**
  * 获取需要渲染的路由菜单
  * @param isOneMerge 只存在一个子路由时，是否合并到父路由
- * @returns 
+ * @returns
  */
 const useMenus = (isOneMerge = true): RouteRecordRaw[] => {
   const children = adminRoutes.children;
@@ -14,7 +14,7 @@ const useMenus = (isOneMerge = true): RouteRecordRaw[] => {
 
   const getMountMenu = (value: RouteRecordRaw[]) => {
     return value.filter((val) => {
-      if (val.children && val.children.length) {
+      if (!val.meta?.hidden && val.children && val.children.length) {
         val.children = getMountMenu(val.children);
       }
 
@@ -43,7 +43,7 @@ const useMenus = (isOneMerge = true): RouteRecordRaw[] => {
 
   /**
    * 去除路径上的参数，例如：/user/:id => /user
-   * @param path 
+   * @param path
    */
   const getRealPath = (path: string) => {
     if (!path) {
@@ -86,7 +86,9 @@ const useMenus = (isOneMerge = true): RouteRecordRaw[] => {
         }
       }
 
-      const path = isPrev ? getRealPath(val.path) : getRealPath(addPathPrev(val.path));
+      const path = isPrev
+        ? getRealPath(val.path)
+        : getRealPath(addPathPrev(val.path));
       return {
         ...val,
         path
