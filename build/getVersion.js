@@ -1,16 +1,68 @@
 const shelljs = require('shelljs');
-let version = '';
 
-if (shelljs.which('git')) {
-  version = shelljs.exec('git tag', { silent: true }).stdout;
-  if (version) {
-    const versions = version.split('\n');
-    version = versions[versions.length - 2];
+/**
+ * whether it is the latest version
+ * @param {string} v version
+ * @returns {boolean}
+ */
+const isLatestVersion = (v) => {
+  if (typeof v !== 'string' || !v) {
+    console.warn('parameter error');
+    return false;
   }
-}
 
-if (!version) {
-  version = `v${Date.now()}`;
-}
+  // gets a description message for the current version, containing a long hash name.
+  const tagMessage = shelljs.exec(`git show ${v} --pretty=%H`, {
+    silent: true
+  }).stdout;
+  if (!tagMessage) {
+    console.warn('read git message error.');
+    return false;
+  }
+
+  // get the hash name for the latest version
+  const latest = shelljs.exec('git rev-parse HEAD', {
+    silent: true
+  }).stdout;
+
+  const idx = tagMessage.indexOf(latest);
+  if (idx === -1) {
+    return false;
+  }
+
+  return true;
+};
+
+const getVersion = () => {
+  if (!shelljs.which('git')) {
+    shelljs.echo('Sorry, this script requires git.');
+    return '';
+  }
+
+  let tempVersion = shelljs.exec('git tag', { silent: true }).stdout;
+  if (!tempVersion) {
+    const currentBranch = shelljs.exec('git symbolic-ref --short -q HEAD', {
+      silent: true
+    }).stdout;
+
+    // get the short hash name for the latest version
+    const latest = shelljs.exec('git rev-parse --short HEAD', {
+      silent: true
+    }).stdout;
+
+    return `${currentBranch}-${latest}`;
+  }
+
+  const versions = tempVersion.split('\n');
+  tempVersion = versions[versions.length - 2];
+
+  if (!isLatestVersion(tempVersion)) {
+    shelljs.echo('Please update git tag.');
+  }
+
+  return tempVersion;
+};
+
+const version = getVersion();
 
 module.exports = version;
