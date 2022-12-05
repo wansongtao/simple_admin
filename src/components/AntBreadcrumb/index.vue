@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { watch, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { IBreadcrumb } from '@/types/setting';
+import { IBreadcrumb } from '@/types';
 import useSetting from '@/store/setting';
 
 const list = ref<IBreadcrumb[]>([]);

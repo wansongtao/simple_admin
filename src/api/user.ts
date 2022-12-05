@@ -1,5 +1,5 @@
 import instance from '@/utils/request';
-import { IBaseResponse, IRecordTotal } from './types/interface';
+import { IBaseResponse, IRecordTotal } from '@/types';
 
 export interface IUserInfo {
   id: string;

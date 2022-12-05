@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { IBreadcrumb } from '@/types/setting';
+import { IBreadcrumb } from '@/types';
 
 const useSetting = defineStore('setting', {
   state: () => {
